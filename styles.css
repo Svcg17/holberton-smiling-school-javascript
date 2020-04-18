@@ -157,6 +157,8 @@
         padding-left: 5rem;
     }
 
+   
+
 
 /* Video Section
       ============================== */
@@ -195,6 +197,32 @@
       .play-icon {
           margin: 2.8rem 5.5rem;
       }
+
+      #innerVideos .loading {
+          background-color: var(--color-primary);
+      }
+ 
+      #innerVideos.carousel-inner .carousel-item.active,
+      #innerVideos.carousel-inner .carousel-item-next,
+      #innerVideos.carousel-inner .carousel-item-prev {
+          display: flex;
+      }
+
+      #innerVideos.carousel-inner .carousel-item-right.active,
+      #innerVideos.carousel-inner .carousel-item-next {
+          transform: translate(21%);
+      }
+
+      #innerVideos.carousel-inner .carousel-item-left.active, 
+      #innerVideos.carousel-inner .carousel-item-prev {
+          transform: translateX(-21%);
+      }
+
+      #innerVideos.carousel-inner .carousel-item-right,
+      #innerVideos.carousel-inner .carousel-item-left{ 
+          transform: translateX(0);
+      }
+
 
 /* Section Membership 
       ============================== */
