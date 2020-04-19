@@ -74,8 +74,8 @@ const makeTutorialCard = () => {
             for (let i of res) {
                 $("#innerVideos").append(`
                     <div id="itemTutorial" class="carousel-item justify-content-center card-${i.id}">
-                        <div class="card border-0 d-none d-lg-flex mr-5">
-                            <img src="${i.thumb_url}" class="card-img-top d-block" alt="${i.keywords[0]} ${i.keywords[1]}" width="255px" height="154px">
+                        <div class="card border-0 mr-4 col-12 col-md-6 col-lg-4">
+                            <img src="${i.thumb_url}" class="card-img-top d-block img-fluid" alt="${i.keywords[0]} ${i.keywords[1]}" width="255px" height="154px">
                             <img src="/images/play.png" class="position-absolute play-icon" width="64px" height="64px">
                             <div class="card-body">
                                 <div>
