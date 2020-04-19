@@ -43,69 +43,68 @@ $( document ).ready(function() {
     }
 
 
-// -------------Tutorial Section-------------
-// Creates each slide with multiple carousel-items
-const cardSlider = () => {
-    $('#innerVideos').carousel({
-    interval: 10000
-    })
-
-    $('.carousel #itemTutorial').each(function(){
-        let next = $(this).next();
-        if (!next.length) next = $(this).siblings().first();
-        next.children(':first-child').clone().appendTo($(this));
-        
-        for (let i = 0; i < 2; i++) {
-            next = next.next();
+    // -------------Tutorial Section-------------
+    // Creates each slide with multiple carousel-items
+    const cardSlider = (id) => {
+        $(`#${id}`).carousel({
+        interval: 10000
+        })
+        $(`.carousel #${id}-itemTutorial`).each(function(){
+            let next = $(this).next();
             if (!next.length) next = $(this).siblings().first();
             next.children(':first-child').clone().appendTo($(this));
-        }
-});
-
-  
-};
-// Creates a carousel item for each tutorial card
-const makeTutorialCard = () => {
-    $.ajax({
-        type: "GET",
-        url: "https://smileschool-api.hbtn.info/popular-tutorials",
-        beforeSend: () => whileLoading(1, "#innerVideos"),
-        success: function(res) {
-            for (let i of res) {
-                $("#innerVideos").append(`
-                    <div id="itemTutorial" class="carousel-item justify-content-center card-${i.id}">
-                        <div class="card border-0 mr-4 col-12 col-md-6 col-lg-4">
-                            <img src="${i.thumb_url}" class="card-img-top d-block img-fluid" alt="${i.keywords[0]} ${i.keywords[1]}" width="255px" height="154px">
-                            <img src="/images/play.png" class="position-absolute play-icon" width="64px" height="64px">
-                            <div class="card-body">
-                                <div>
-                                    <h6 class="font-weight-bold">${i.title}</h6>
-                                    <p class="card-text text-gray">${i["sub-title"]}</p>
-                                    <span class="d-flex flex-row">
-                                        <img src="${i.author_pic_url}" class="rounded-circle" alt="${i.keywords[0]} ${i.keywords[1]}" width="30px" height="30px">
-                                        <p class="profile-video font-weight-bold ml-3">${i.author}</p>
-                                    </span>
-                                </div>
-                                <span class="d-flex flex-row justify-content-between">
-                                    <span id="stars">
-                                    </span>
-                                    <p class="profile-video p-0 m-0">${i.duration}</p>
-                                </span>
-                            </div>  
-                        </div>
-                    </div> 
-                `);
-                for (let j = 0; j < i.star; j++)
-                    $(`.card-${i.id} #stars`).append(`<img src="./images/star_on.png" alt="one full star" width="15px"></img>`);
+            
+            for (let i = 0; i < 2; i++) {
+                next = next.next();
+                if (!next.length) next = $(this).siblings().first();
+                next.children(':first-child').clone().appendTo($(this));
             }
-            $("#itemTutorial").first().addClass("active");
-            cardSlider();
-            whileLoading();
-        }
-    })
-}
+        });
+
+    };
+    // Creates a carousel item for each tutorial card
+    const makeTutorialCard = (URL, id) => {
+        $.ajax({
+            type: "GET",
+            url: URL,
+            beforeSend: () => whileLoading(1, id),
+            success: function(res) {
+                for (let i of res) {
+                    $(`#${id}`).append(`
+                        <div id="${id}-itemTutorial" class="carousel-item justify-content-center ${id}-card-${i.id}">
+                            <div class="card border-0 mr-4 col-12 col-md-6 col-lg-4">
+                                <img src="${i.thumb_url}" class="card-img-top d-block img-fluid" alt="${i.keywords[0]} ${i.keywords[1]}" width="255px" height="154px">
+                                <img src="/images/play.png" class="position-absolute play-icon" width="64px" height="64px">
+                                <div class="card-body">
+                                    <div>
+                                        <h6 class="font-weight-bold">${i.title}</h6>
+                                        <p class="card-text text-gray">${i["sub-title"]}</p>
+                                        <span class="d-flex flex-row">
+                                            <img src="${i.author_pic_url}" class="rounded-circle" alt="${i.keywords[0]} ${i.keywords[1]}" width="30px" height="30px">
+                                            <p class="profile-video font-weight-bold ml-3">${i.author}</p>
+                                        </span>
+                                    </div>
+                                    <span class="d-flex flex-row justify-content-between">
+                                        <span id="${id}-stars">
+                                        </span>
+                                        <p class="profile-video p-0 m-0">${i.duration}</p>
+                                    </span>
+                                </div>  
+                            </div>
+                        </div> 
+                    `);
+                    for (let j = 0; j < i.star; j++)
+                        $(`.${id}-card-${i.id} #${id}-stars`).append(`<img src="./images/star_on.png" alt="one full star" width="15px"></img>`);
+                }
+                $(`#${id}-itemTutorial`).first().addClass("active");
+                cardSlider(id);
+                whileLoading();
+            }
+        })
+    }
 
     // Calling all the functions
     getQuotes();
-    makeTutorialCard();
+    makeTutorialCard("https://smileschool-api.hbtn.info/popular-tutorials", "innerVideos");
+    makeTutorialCard("https://smileschool-api.hbtn.info/latest-videos", "latestInner");
 }); 
