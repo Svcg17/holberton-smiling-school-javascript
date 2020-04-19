@@ -1,6 +1,6 @@
 // JS scripts
 $( document ).ready(function() {
-    // -------------Quotes Section-------------
+    // -------------Quotes Sections-------------
     // loading icon for quotes carousel
     const whileLoading = (on, id) => {
         if (on) {
@@ -43,7 +43,7 @@ $( document ).ready(function() {
     }
 
 
-    // -------------Tutorial Section-------------
+    // ------------- Video Carousel Sections -------------
     // Creates each slide with multiple carousel-items
     const cardSlider = (id) => {
         $(`#${id}`).carousel({
