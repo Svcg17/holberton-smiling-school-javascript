@@ -107,27 +107,20 @@ $( document ).ready(function() {
     // Displays course cards based on filters(parameters)
     const getCourses = (keyword, topic, sortBy) => {
         let sortByObj = {
-            "most popular": "star",
-            "most recent": "published_at",
-            "most viewed": "views"
+            "most popular": "most_popular",
+            "most recent": "most_recent",
+            "most viewed": "most_viewed"
         }
 
+        let k = keyword.charAt(0).toUpperCase() + keyword.slice(1)
         $.ajax({
             type: "GET",
-            url: "https://smileschool-api.hbtn.info/courses",
+            url: `https://smileschool-api.hbtn.info/courses?q=${keyword}&topic=${topic}&sort=${sortByObj[sortBy]}`,
+            beforeSend: whileLoading(1, "#section-results"),
             success: function(res) {
                 $("#courses").empty();
-                //Capitalize arguments
-                let k = keyword.charAt(0).toUpperCase() + keyword.slice(1)
-                let t = topic.charAt(0).toUpperCase() + topic.slice(1);
-                //sort by filter
-                res.courses.sort((a, b) => {
-                    return b[sortByObj[sortBy]] - a[sortByObj[sortBy]];
-                });
-                //display card
                 let numVids = 0
                 for (let i of res.courses) {
-                    if ((i.keywords.includes(k) || k == "") && (t == i.topic || t == "All")) {
                         $("#courses").append(`
                             <div id="course" class="card border-0 mr-4">
                                 <img src="${i.thumb_url}" class="card-img-top d-block img-fluid" alt="${i.keywords[0]} ${i.keywords[1]}" width="255px" height="154px">
@@ -150,7 +143,6 @@ $( document ).ready(function() {
                             </div>
                         `);
                         numVids++;
-                    }
                 }
                 $("#courses").prepend(`
                     <p class="num-vid col-12">${numVids} videos</p>
