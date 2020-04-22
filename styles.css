@@ -198,6 +198,12 @@
           margin: 2.8rem 5.5rem;
       }
 
+      .play-icon2 {
+          margin: 2rem 5rem;
+      }
+
+      
+
       #innerVideos .loading, #latestInner .loading {
           background-color: var(--color-primary);
       }
@@ -347,9 +353,11 @@
 
      .num-vid {
         color: gray;
-        margin-left: 3.5rem !important;
      }
 
+     #courses {
+         margin-left: 5rem !important;
+     }
 
 /* Footer 
       =============================== */
@@ -433,5 +441,15 @@
         
         .faq {
           max-width: unset;
+        }
+
+        #course {
+            max-width: 100%;
+        }
+        #courses {
+            margin: 0 !important;
+        }
+        .play-icon2 {
+            margin: 4.5rem 8.5rem;
         }
     }

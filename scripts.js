@@ -103,8 +103,136 @@ $( document ).ready(function() {
         })
     }
 
+    // ------------- Courses Filter -------------
+    // Displays course cards based on filters(parameters)
+    const getCourses = (keyword, topic, sortBy) => {
+        let sortByObj = {
+            "most popular": "star",
+            "most recent": "published_at",
+            "most viewed": "views"
+        }
+
+        $.ajax({
+            type: "GET",
+            url: "https://smileschool-api.hbtn.info/courses",
+            success: function(res) {
+                $("#courses").empty();
+                //Capitalize arguments
+                let k = keyword.charAt(0).toUpperCase() + keyword.slice(1)
+                let t = topic.charAt(0).toUpperCase() + topic.slice(1);
+                //sort by filter
+                res.courses.sort((a, b) => {
+                    return b[sortByObj[sortBy]] - a[sortByObj[sortBy]];
+                });
+                //display card
+                let numVids = 0
+                for (let i of res.courses) {
+                    if ((i.keywords.includes(k) || k == "") && (t == i.topic || t == "All")) {
+                        $("#courses").append(`
+                            <div id="course" class="card border-0 mr-4">
+                                <img src="${i.thumb_url}" class="card-img-top d-block img-fluid" alt="${i.keywords[0]} ${i.keywords[1]}" width="255px" height="154px">
+                                <img src="/images/play.png" class="position-absolute play-icon2" width="64px" height="64px">
+                                <div class="card-body">
+                                    <div>
+                                        <h6 class="font-weight-bold">${i.title}</h6>
+                                        <p class="card-text text-gray">${i["sub-title"]}</p>
+                                        <span class="d-flex flex-row">
+                                            <img src="${i.author_pic_url}" class="rounded-circle" alt="${i.keywords[0]} ${i.keywords[1]}" width="30px" height="30px">
+                                            <p class="profile-video font-weight-bold ml-3">${i.author}</p>
+                                        </span>
+                                    </div>
+                                    <span class="d-flex flex-row justify-content-between">
+                                        <span id="${i.id}-stars">
+                                        </span>
+                                        <p class="profile-video p-0 m-0">${i.duration}</p>
+                                    </span>
+                                </div>  
+                            </div>
+                        `);
+                        numVids++;
+                    }
+                }
+                $("#courses").prepend(`
+                    <p class="num-vid col-12">${numVids} videos</p>
+                `);
+            }
+        });
+    }
+
+    // Listens for input/changes in filters
+    const filterListener = () => {
+        getCourses($("#keywords").val(), $("#btn-topic").text(), $("#btn-sort").text());
+        $("#keywords").on("input", () => {
+            getCourses($("#keywords").val(), $("#btn-topic").text(), $("#btn-sort").text());
+        });
+        $("#sortTopic .dropdown-item").click((e) => {
+            $("#btn-topic").html($(e.target).text());
+            getCourses($("#keywords").val(), $(e.target).text(), $("#btn-sort").text());
+        });
+        $("#sortBy .dropdown-item").click((e) => {
+            $("#btn-sort").html($(e.target).text());
+            getCourses($("#keywords").val(), $("#btn-topic").text(), $(e.target).text());
+        });
+    };
+
+    // Displays dynamic section of filters
+    const getFilters = () => {
+        $.ajax({
+            type: "GET",
+            url: "https://smileschool-api.hbtn.info/courses",
+            success: function(res) {
+                    $(".section-filter #filters").append(`
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                            <p class="text-uppercase m-0 font-weight-bold input-title">keywords</p>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend bg-span">
+                                    <span class="font-icon-filter input-group-text bg-transparent border-0 border-bottom bg-span text-white" id="basic-addon1"></span>
+                                </div>
+                                <input id="keywords" type="text" class="form-control border-0 border-bottom rounded-0" placeholder="Search by keyword" aria-label="keywords" aria-describedby="basic-addon1">
+                            </div> 
+                        </div> 
+                        <div class="col-sm">
+                            <p class="text-uppercase m-0 font-weight-bold input-title">Topic</p>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend bg-span w-100">
+                                    <button id="btn-topic" class="btn dropdown-toggle bg-span text-white border-0 w-100 d-flex justify-content-between align-items-center border-bottom toCap" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${res.topic}</button>
+                                    <div id="sortTopic" class="dropdown-menu w-100">
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="col-sm">
+                            <p class="text-uppercase m-0 font-weight-bold input-title">Sort by</p>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend bg-span w-100">
+                                    <button id="btn-sort" class="btn dropdown-toggle text-white w-100 bg-span border-0 d-flex justify-content-between align-items-center border-bottom toCap" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${res.sort.replace("_", " ")}</button>
+                                    <div id="sortBy" class="dropdown-menu w-100">
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    `)
+                    for (let j of res.topics) {
+                        $("#sortTopic").append(`
+                            <a id="topicFilter" class="dropdown-item toCap" href="#">${j}</a>
+                        `)
+                    }
+                    for (let j of res.sorts) {
+                        let word = j.replace("_", " ");
+                        $("#sortBy").append(`
+                            <a id="${j}" class="dropdown-item toCap" href="#">${word}</a>
+                        `)
+                    }
+                    $(".toCap").css("text-transform", "capitalize");
+                    filterListener();
+                }
+        })
+    }
+    
+
     // Calling all the functions
     getQuotes();
     makeTutorialCard("https://smileschool-api.hbtn.info/popular-tutorials", "innerVideos");
     makeTutorialCard("https://smileschool-api.hbtn.info/latest-videos", "latestInner");
+    getFilters();
 }); 
