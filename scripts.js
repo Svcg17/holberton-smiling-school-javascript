@@ -72,9 +72,9 @@ $( document ).ready(function() {
                 for (let i of res) {
                     $(`#${id}`).append(`
                         <div id="${id}-itemTutorial" class="carousel-item justify-content-center ${id}-card-${i.id}">
-                            <div class="card border-0 mr-4 col-12 col-md-6 col-lg-4">
+                            <div class="card border-0 mr-4">
                                 <img src="${i.thumb_url}" class="card-img-top d-block img-fluid" alt="${i.keywords[0]} ${i.keywords[1]}" width="255px" height="154px">
-                                <img src="/images/play.png" class="position-absolute play-icon" width="64px" height="64px">
+                                <img src="./images/play.png" class="position-absolute play-icon" width="64px" height="64px">
                                 <div class="card-body">
                                     <div>
                                         <h6 class="font-weight-bold">${i.title}</h6>
@@ -124,7 +124,7 @@ $( document ).ready(function() {
                         $("#courses").append(`
                             <div id="course" class="card border-0 mr-4">
                                 <img src="${i.thumb_url}" class="card-img-top d-block img-fluid" alt="${i.keywords[0]} ${i.keywords[1]}" width="255px" height="154px">
-                                <img src="/images/play.png" class="position-absolute play-icon2" width="64px" height="64px">
+                                <img src="./images/play.png" class="position-absolute play-icon2" width="64px" height="64px">
                                 <div class="card-body">
                                     <div>
                                         <h6 class="font-weight-bold">${i.title}</h6>
