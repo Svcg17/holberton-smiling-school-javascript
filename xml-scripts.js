@@ -77,7 +77,7 @@ $( document ).ready(function() {
                         <div id="${id}-itemTutorial" class="carousel-item justify-content-center ${id}-card-${xmlDoc.getElementsByTagName("video")[i].getAttribute("id")}">
                             <div class="card border-0 mr-4 col-12 col-md-6 col-lg-4">
                                 <img src="${xmlDoc.getElementsByTagName("thumb_url")[i].textContent}" class="card-img-top d-block img-fluid" alt="tutorial" width="255px" height="154px">
-                                <img src="/images/play.png" class="position-absolute play-icon" width="64px" height="64px">
+                                <img src="./images/play.png" class="position-absolute play-icon" width="64px" height="64px">
                                 <div class="card-body">
                                     <div>
                                         <h6 class="font-weight-bold">${xmlDoc.getElementsByTagName("title")[i].textContent}</h6>
