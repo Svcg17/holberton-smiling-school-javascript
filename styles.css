@@ -202,107 +202,65 @@
           margin: 2rem 5rem;
       }
 
-      
-
+      /* Dynamic carousel*/
       #innerVideos .loading, #latestInner .loading {
           background-color: var(--color-primary);
       }
 
       @media (max-width: 576px) {
-        #innerVideos.carousel-inner .carousel-item > div {
+        #innerVideos.carousel-inner .carousel-item > div,
+        #latestInner.carousel-inner .carousel-item > div 
+        {
             display: none !important;
         }
-        #innerVideos.carousel-inner .carousel-item > div:nth-child(1) {
+        #innerVideos.carousel-inner .carousel-item > div:nth-child(1),
+        #latestInner.carousel-inner .carousel-item > div:nth-child(1)
+        {
             display: block !important;
         }
         .play-icon {
-            margin: -6.2rem 5.5rem;
+            margin: -6.2rem 5.5rem !important;
         }
       }
-      
+
       #innerVideos.carousel-inner .carousel-item.active,
       #innerVideos.carousel-inner .carousel-item-next,
-      #innerVideos.carousel-inner .carousel-item-prev {
+      #innerVideos.carousel-inner .carousel-item-prev,
+      #latestInner.carousel-inner .carousel-item.active,
+      #latestInner.carousel-inner .carousel-item-next,
+      #latestInner.carousel-inner .carousel-item-prev
+      {
           display: flex;
       }
 
       @media (min-width: 576px) {
         #innerVideos.carousel-inner .carousel-item-right.active,
-        #innerVideos.carousel-inner .carousel-item-next {
-            transform: translate(40%);
+        #innerVideos.carousel-inner .carousel-item-next,
+        #latestInner.carousel-inner .carousel-item-right.active,
+        #latestInner.carousel-inner .carousel-item-next
+        {
+            transform: translate(20.000%);
         }
 
         #innerVideos.carousel-inner .carousel-item-left.active, 
-        #innerVideos.carousel-inner .carousel-item-prev {
-            transform: translateX(-40%);
-        }
-      }
-
-      @media (min-width: 992px) {
-        #innerVideos.carousel-inner .carousel-item-right.active,
-        #innerVideos.carousel-inner .carousel-item-next {
-            transform: translate(20%);
-        }
-
-        #innerVideos.carousel-inner .carousel-item-left.active, 
-        #innerVideos.carousel-inner .carousel-item-prev {
-            transform: translateX(-20%);
+        #innerVideos.carousel-inner .carousel-item-prev,
+        #latestInner.carousel-inner .carousel-item-left.active, 
+        #latestInner.carousel-inner .carousel-item-prev 
+        {
+            transform: translateX(-20.000%);
         }
      }
 
       #innerVideos.carousel-inner .carousel-item-right,
-      #innerVideos.carousel-inner .carousel-item-left{ 
-          transform: translateX(0);
-      }
-
-      @media (max-width: 576px) {
-        #latestInner.carousel-inner .carousel-item > div {
-            display: none !important;
-        }
-        #latestInner.carousel-inner .carousel-item > div:nth-child(1) {
-            display: block !important;
-        }
-        .play-icon {
-            margin: -6.2rem 5.5rem;
-        }
-      }
-      
-      #latestInner.carousel-inner .carousel-item.active,
-      #latestInner.carousel-inner .carousel-item-next,
-      #latestInner.carousel-inner .carousel-item-prev {
-          display: flex;
-      }
-
-      @media (min-width: 576px) {
-        #latestInner.carousel-inner .carousel-item-right.active,
-        #latestInner.carousel-inner .carousel-item-next {
-            transform: translate(40%);
-        }
-
-        #latestInner.carousel-inner .carousel-item-left.active, 
-        #latestInner.carousel-inner .carousel-item-prev {
-            transform: translateX(-40%);
-        }
-      }
-
-      @media (min-width: 992px) {
-        #latestInner.carousel-inner .carousel-item-right.active,
-        #latestInner.carousel-inner .carousel-item-next {
-            transform: translate(20%);
-        }
-
-        #latestInner.carousel-inner .carousel-item-left.active, 
-        #latestInner.carousel-inner .carousel-item-prev {
-            transform: translateX(-20%);
-        }
-     }
-
+      #innerVideos.carousel-inner .carousel-item-left,
       #latestInner.carousel-inner .carousel-item-right,
-      #latestInner.carousel-inner .carousel-item-left{ 
+      #latestInner.carousel-inner .carousel-item-left
+      { 
           transform: translateX(0);
+          background-color: var(--color-white);
       }
 
-
+    
 /* Section Membership 
       ============================== */
       .section-membership {
@@ -393,6 +351,9 @@
         }
         #courses {
             margin-left: 3.5rem !important;
+        }
+        .play-icon {
+            margin: 1rem 3rem;
         }
       }
 
